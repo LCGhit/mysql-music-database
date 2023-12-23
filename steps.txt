@@ -1,0 +1,317 @@
+create database musica;
+
+create table artist (
+     id int not null auto_increment,
+     firstName varchar(50),
+     lastName varchar(50),
+     birthDate smallint,
+     nationality varchar(50),
+     primary key (id)
+     );
+
+create table writer like artist;
+
+create table producer like artist;
+
+create table band (
+     id int not null auto_increment,
+     name varchar(50),
+     founded smallint,
+     disbanded smallint,
+     nationality varchar(50),
+     primary key (id)
+     );
+
+create table band_membership (
+     band int,
+     artist int,
+     foreign key (band) references band(id),
+     foreign key (artist) references artist(id),
+     primary key (band, artist)
+     );
+
+create table album (
+     id int not null auto_increment,
+     title varchar(50),
+     band int,
+     releaseDate smallint,
+     foreign key (band) references band(id),
+     primary key (id)
+     );
+
+create table labels (
+     label varchar(50),
+     album int,
+     foreign key (album) references album(id),
+     primary key (label, album)
+     );
+
+create table albumWriter (
+     album int,
+     writer int,
+     foreign key (album) references album(id),
+     foreign key (writer) references writer(id),
+     primary key (album, writer)
+     );
+
+create table albumProducer (
+     album int,
+     producer int,
+     foreign key (album) references album(id),
+     foreign key (producer) references producer(id),
+     primary key (album, producer)
+     );
+
+create table tracks (
+     id int not null auto_increment,
+     title varchar(100),
+     album int,
+     length varchar(10),
+     trackNumber tinyint,
+     foreign key (album) references album(id),
+     primary key (id)
+     );
+
+insert into artist (firstName, lastName, birthDate, nationality) values
+     ("Bill", "Evans", 1929, "USA"),
+     ("Scott", "LaFaro", 1936, "USA"),
+     ("Paul", "Motian", 1931, "USA"),
+     ("Jorge", "Romão", 1963, "PORTUGAL"),
+     ("Rui", "Reininho", 1955, "PORTUGAL"),
+     ("Tóli", "Machado", 1961, "PORTUGAL"),
+     ("Bryan", "Adams", 1959, "CANADA"),
+     ("Mark", "Knopfler", 1949, "UK"),
+     ("John", "Illsley", 1949, "UK"),
+     ("Omar", "Hakim", 1959, "USA"),
+     ("Terry", "Williams", 1948, "UK"),
+     ("Alan", "Clark", 1952, "UK"),
+     ("Guy", "Fletcher", 1960, "UK"),
+     ("Roy", "Bittan", 1949, "USA"),
+     ("Sid", "McGinnis", 1949, "USA"),
+     ("Pick", "Withers", 1948, "UK");
+
+insert into writer (firstName, lastName, birthDate, nationality) values
+     ("John", "Carisi", 1922, "USA"),
+     ("Arthur", "Schwartz", 1900, "USA"),
+     ("Earl", "Zindars", 1927, "USA"),
+     ("Miles", "Davis", 1926, "USA"),
+     ("Irving", "Berlin", 1888, "USA"),
+     ("Harry", "Warren", 1893, "USA"),
+     ("Mack", "Gordon", 1904, "USA"),
+     ("Gus", "Arnheim", 1897, "USA"),
+     ("Charles N.", "Daniels", 1878, "USA"),
+     ("Harry", "Tobias", 1895, "USA"),
+     ("Howard", "Dietz", 1896, "USA"),
+     ("Mark", "Knopfler", 1949, "UK"),
+     ("Bryan", "Adams", 1959, "CANADA"),
+     ("Jim", "Vallance", 1952, "CANADA"),
+     ("Rui", "Reininho", 1955, "PORTUGAL"),
+     ("Tóli", "Machado", 1961, "PORTUGAL"),
+     ("Erasmo", "Carlos", 1941, "BRAZIL"),
+     ("Roberto", "Carlos", 1941, "BRAZIL");
+
+insert into producer (firstName, lastName, birthDate, nationality) values
+     ("Orrin", "Keepnews", 1923, "USA"),
+     ("Jim", "Vallance", 1952, "CANADA"),
+     ("Bob", "Clearmountain", 1953, "USA"),
+     ("Bryan", "Adams", 1959, "CANADA"),
+     ("Mark", "Knopfler", 1949, "UK"),
+     ("Jimmy", "Iovine", 1953, "USA"),
+     ("Neil", "Dorfsman", 1952, "USA"),
+     ("GNR", "null", null, "PORTUGAL"),
+     ("Alexandre", "Soares", 1958, "PORTUGAL"),
+     ("Rémy Walter", "null", null, "null"),
+     ("Mário", "Barreiros", 1961, "PORTUGAL"),
+     ("Nilo", "Romero", 1960, "BRAZIL"),
+     ("Ricardo", "Camacho", 1954, "PORTUGAL"),
+     ("Nuno", "Rodrigues", 1949, "PORTUGAL"),
+     ("Franck", "Darcel", 1958, "FRANCE"),
+     ("Vicente", "Amigo", 1967, "SPAIN");
+
+insert into band (name, founded, disbanded, nationality) values
+     ("Bill Evans Trio", 1959, 1980, "USA"),
+     ("GNR", 1980, null, "PORTUGAL"),
+     ("Bryan Adams", 1975, null, "CANADA"),
+     ("Dire Straits", 1977, 1995, "UK");
+
+insert into album (title, band, releaseDate) values
+     ("Explorations", 1, 1961),
+     ("Concentrado", 2, 2012),
+     ("Reckless", 3, 2014),
+     ("Brothers In Arms", 4, 1985),
+     ("Making Movies", 4, 1980);
+
+insert into labels values
+     ("Riverside", 1),
+     ("EMI", 2),
+     ("A&M", 3),
+     ("UMe", 3),
+     ("VERTIGO", 4),
+     ("VERTIGO", 5);
+
+insert into albumProducer values
+     (1, 1),
+     (3, 3),
+     (3, 4),
+     (3, 2),
+     (4, 5),
+     (4, 7),
+     (5, 5),
+     (5, 6),
+     (2, 7),
+     (2, 8),
+     (2, 9),
+     (2, 10),
+     (2, 11),
+     (2, 12),
+     (2, 13),
+     (2, 14),
+     (2, 15),
+     (2, 16);
+
+insert into band_membership values
+     (1, 1),
+     (1, 2),
+     (1, 3),
+     (2, 4),
+     (2, 5),
+     (2, 6),
+     (3, 7),
+     (4, 8),
+     (4, 9),
+     (4, 11),
+     (4, 12),
+     (4, 13);
+
+insert into albumWriter values
+     (1, 1),
+     (1, 2),
+     (1, 11),
+     (1, 3),
+     (1, 4),
+     (1, 5),
+     (1, 6),
+     (1, 7),
+     (1, 8),
+     (1, 9),
+     (4, 12),
+     (5, 12),
+     (3, 13),
+     (3, 14),
+     (2, 15),
+     (2, 16),
+     (2, 17),
+     (2, 18);
+
+insert into tracks (title, album, length, trackNumber) values
+("Israel", 1, "6:08", 1),
+("Haunted Heart", 1, "3:25", 2),
+("Beautiful Love", 1, "5:03", 3),
+("Elsa", 1, "5:05", 4),
+("Nardis", 1, "5:48", 5),
+("How Deep Is The Ocean", 1, "3:30", 6),
+("I Wish I Knew", 1, "4:39", 7),
+("Sweet And Lovely", 1, "5:50", 8),
+("Sangue oculto", 2, "5:13", 1),
+("Video maria", 2, "4:41", 2),
+("Efectivamente", 2, "3:17", 3),
+("Dunas", 2, "3:33", 4),
+("Ana Lee", 2, "3:19", 5),
+("Pronúncia do norte", 2, "3:27", 6),
+("Morte ao sol", 2, "4:44", 7),
+("+ Vale nunca", 2, "5:26", 8),
+("Quero Que Vá Tudo Pró Inferno", 2, "2:40", 9),
+("Asas", 2, "3:52", 10),
+("Saliva", 2, "3:38", 11),
+("Hardcore(1º Escalão)", 2, "4:23", 12),
+("Portugal Na CEE", 2, "3:34", 13),
+("Pós modernos", 2, "4:27", 14),
+("Vocês", 2, "3:21", 15),
+("Cais", 2, "4:12", 16),
+("Tirana", 2, "4:59", 17),
+("Las vagas", 2, "4:17", 18),
+("Sub-16", 2, "3:21", 19),
+("Sexta-feira(Um seu criado)", 2, "3:45", 20),
+("One Night Love Affair", 3, "4:33", 1),
+("She's Only Happy When She's Dancin'", 3, "3:13", 2),
+("Run To You", 3, "3:53", 3),
+("Heaven", 3, "4:03", 4),
+("Somebody", 3, "4:43", 5),
+("Summer Of '69", 3, "3:36", 6),
+("Kids Wanna Rock", 3, "2:35", 7),
+("It's Only Love", 3, "3:14", 8),
+("Long Gone", 3, "3:58", 9),
+("Ain't Gonna Cry", 3, "4:07", 10),
+("Let Me Down Easy", 3, "3:39", 11),
+("Teacher, Teacher", 3, "3:46", 12),
+("The Boys Night Out", 3, "3:52", 13),
+("Draw The Line", 3, "3:24", 14),
+("Play To Win", 3, "3:27", 15),
+("Too Hot To Handle", 3, "4:00", 16),
+("Reckless", 3, "4:00", 17),
+("Remember - Live At Hammersmith Odeon/1985", 3, "4:30", 18),
+("The Only One - Live At Hammersmith Odeon/1985", 3, "4:38", 19),
+("It's Only Love - Live At Hammersmith Odeon/1985", 3, "3:49", 20),
+("Kids Wanna Rock - Live At Hammersmith Odeon/1985", 3, "3:15", 21),
+("Long Gone - Live At Hammersmith Odeon/1985", 3, "6:20", 22),
+("Cuts Like A Knife - Live At Hammersmith Odeon/1985", 3, "5:38", 23),
+("Lonely Nights - Live At Hammersmith Odeon/1985", 3, "3:54", 24),
+("Tonight - Live At Hammersmith Odeon/1985", 3, "6:12", 25),
+("This Time - Live At Hammersmith Odeon/1985", 3, "3:35", 26),
+("The Best Was Yet To Come - Live At Hammersmith Odeon/1985", 3, "2:42", 27),
+("Heaven - Live At Hammersmith Odeon/1985", 3, "4:02", 28),
+("Run To You - Live At Hammersmith Odeon/1985", 3, "4:29", 29),
+("Somebody - Live At Hammersmith Odeon/1985", 3, "4:19", 30),
+("Straight From The Heart - Live At Hammersmith Odeon/1985", 3, "3:15", 31),
+("Summer Of '69 - Live At Hammersmith Odeon/1985", 3, "4:38", 32),
+("So Far Away", 4, "4:04", 1),
+("Money For Nothing", 4, "7:00", 2),
+("Walk Of Life", 4, "4:10", 3),
+("Your Latest Trick", 4, "4:49", 4),
+("Why Worry", 4, "5:16", 5),
+("Ride Across The River", 4, "6:59", 6),
+("The Man's Too Strong", 4, "4:40", 7),
+("One World", 4, "3:40", 8),
+("Brothers In Arms", 4, "6:49", 9),
+("Tunnel Of Love", 5, "8:09", 1),
+("Romeo And Juliet", 5, "6:00", 2),
+("Skateaway", 5, "6:37", 3),
+("Expresso Love", 5, "5:11", 4),
+("Hand In Hand", 5, "4:47", 5),
+("Solid Rock", 5, "3:25", 6),
+("Les Boys", 5, "4:08", 7);
+
+SELECT * FROM artist ORDER BY firstName ASC, lastName ASC;
+
+SELECT * FROM album ORDER BY title ASC;
+
+SELECT a.title, a.releaseDate AS 'release' FROM album a INNER JOIN band b ON (a.band = b.id) WHERE b.name="Dire Straits" ORDER BY releaseDate;
+
+SELECT t.trackNumber AS 'track number', t.title FROM tracks t INNER JOIN album a ON (t.album = a.id) WHERE a.title="Reckless" ORDER BY t.trackNumber;
+
+SELECT t.trackNumber AS 'track number', t.title, t.length, a.title AS album, b.name AS band FROM tracks t INNER JOIN album a ON (t.album = a.id) INNER JOIN band b ON (a.band = b.id) WHERE a.title = "Reckless";
+
+SELECT t.trackNumber AS 'track number', t.title AS 'song title', a.title AS 'album', a.releaseDate AS 'release', b.name AS 'band' FROM tracks t INNER JOIN album a ON (t.album = a.id) INNER JOIN band b ON (a.band = b.id) WHERE t.title = 'walk of life';
+
+ALTER TABLE tracks ADD COLUMN lyrics VARCHAR(2000) AFTER length;
+
+UPDATE tracks set lyrics = "Here\"comes\"Johnny\"singing\"oldies\"goldies\"Be\"Bop\"A\"Lula\"Baby\"What\"I\"Say\"Here\"comes\"Johnny\"singing\"I\"Gotta\"Woman\"Down\"in\"the\"tunnels\"trying\"to\"make\"it\"pay\"He\"got\"the\"action\"he\"got\"the\"motion\"Yeah\"the\"boy\"can\"play\"Dedication\"devotion\"Turning\"all\"the\"night\"time\"into\"the\"day\"He\"do\"the\"song\"about\"the\"sweet\"lovin'\"woman\"He\"do\"the\"song\"about\"the\"knife\"He\"do\"the\"walk\"do\"the\"walk\"of\"life\"Yeah\"he\"do\"the\"walk\"of\"life\"Here\"comes\"Johnny\"gonna\"tell\"you\"the\"story\"Hand\"me\"down\"my\"walkin'\"shoes\"Here\"comes\"Johnny\"with\"the\"power\"and\"the\"glory\"Backbeat\"the\"talkin'\"blues\"He\"got\"the\"action\"he\"got\"the\"motion\"Yeah\"the\"boy\"can\"play\"Dedication\"devotion\"Turning\"all\"the\"night\"time\"into\"the\"day\"The\"song\"about\"the\"sweet\"lovin'\"woman\"He\"do\"the\"song\"about\"the\"knife\"Then\"he\"do\"the\"walk\"he\"do\"the\"walk\"of\"life\"Yeah\"he\"do\"the\"walk\"of\"life\"Here\"comes\"Johnny\"singing\"oldies\"goldies\"Be\"Bop\"A\"Lula\"Baby\"What\"I\"Say\"Here\"comes\"Johnny\"singing\"I\"Gotta\"Woman\"Down\"in\"the\"tunnels\"trying\"to\"make\"it\"pay\"He\"got\"the\"action\"he\"got\"the\"motion\"Yeah\"the\"boy\"can\"play\"Dedication\"devotion\"Turning\"all\"the\"night\"time\"into\"the\"day\"And\"after\"all\"the\"violence\"and\"double\"talk\"There's\"just\"a\"song\"in\"all\"the\"trouble\"and\"the\"strife\"You\"do\"the\"walk\"yeah\"you\"do\"the\"walk\"of\"life\"Hmm\"you\"do\"the\"walk\"of\"life" WHERE title = 'Walk Of Life';
+
+// VERIFICAR A POSIÇÃO DA ÚLTIMA MÚSICA ANTES DAS BONUS TRACKS
+SELECT trackNumber FROM tracks WHERE title = 'Ain\'t Gonna Cry';
+
+DELETE FROM tracks WHERE id IN (SELECT t.id FROM tracks t INNER JOIN album a ON (t.album = a.id) WHERE a.title = 'reckless' AND t.trackNumber > 10);
+
+UPDATE tracks SET id = id - 22 WHERE id IN (SELECT id FROM tracks WHERE id > 60);
+
+// BACKUP DA BASE DE DADOS NO TERMINAL
+mysqldump -u root -p musica > musica.sql
+
+drop database musica;
+
+create database musica;
+
+// RECUPERAÇÃO DA BASE DE DADOS NO TERMINAL
+mysql -u root -p < musica.sql
+
+CREATE OR REPLACE VIEW WalkOfLife AS SELECT t.trackNumber AS 'track number', t.title AS 'song title', a.title AS 'album', a.releaseDate AS 'release', b.name AS 'band' FROM tracks t INNER JOIN album a ON (t.album = a.id) INNER JOIN band b ON (a.band = b.id) WHERE t.title = 'walk of life';
